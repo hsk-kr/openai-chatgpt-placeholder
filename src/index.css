@@ -1,4 +1,9 @@
 body {
-  width: 300px;
-  height: 200px;
+  width: 500px;
+  height: 300px;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
 }
