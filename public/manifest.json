@@ -1,0 +1,17 @@
+{
+  "name": "chrome extension tutorial",
+  "description": "The power of React and TypeScript for building interactive Chrome extensions",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["./assets/content.js"]
+    }
+  ]
+}
