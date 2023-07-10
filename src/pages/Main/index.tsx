@@ -4,6 +4,7 @@ import PlaceholderList from '../../components/PlaceholderList';
 import PlaceholderEditModal from '../../components/PlaceholderEditModal';
 import usePlaceholderList from '../../hooks/usePlaceholderList';
 import useToolAvailable from '../../hooks/useToolAvailable';
+import { useState } from 'react';
 
 const Container = styled.div`
   position: relative;
@@ -23,14 +24,29 @@ const Main = () => {
     togglePlaceholderListItemActive,
   } = usePlaceholderList();
   const { available, setAvailable } = useToolAvailable();
+  const [selectedPlaceholderListItemId, setSelectedPlaceholderListItemId] =
+    useState<string>();
 
   const handleAvailableChange = (active: boolean) => {
     setAvailable(active);
   };
 
+  const openPlaceHolderEditModal = (id: string) => {
+    setSelectedPlaceholderListItemId(id);
+  };
+
+  const closePlaceHolderEditModal = () => {
+    setSelectedPlaceholderListItemId(undefined);
+  };
+
   return (
     <Container>
-      {/* <PlaceholderEditModal visible={true} /> */}
+      <PlaceholderEditModal
+        visible={selectedPlaceholderListItemId !== undefined}
+        placeholderId={selectedPlaceholderListItemId}
+        onClose={closePlaceHolderEditModal}
+        onSubmit={closePlaceHolderEditModal}
+      />
       <Header
         onAdd={addNewPlaceholderListItem}
         checked={available}
@@ -41,6 +57,7 @@ const Main = () => {
           items={placeholderList}
           onItemDelete={removePlaceholderListItem}
           onItemToggle={togglePlaceholderListItemActive}
+          onItemClick={openPlaceHolderEditModal}
         />
       </ListContainer>
     </Container>

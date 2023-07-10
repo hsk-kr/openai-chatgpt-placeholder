@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import usePlaceholderList from '../../hooks/usePlaceholderList';
+import { useEffect, useRef } from 'react';
 
 interface PlaceholderEditModalProps {
-  placeholderId?: number;
+  placeholderId?: string;
   visible?: boolean;
   onClose?: VoidFunction;
   onSubmit?: VoidFunction;
@@ -32,16 +34,76 @@ const SubmitWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const PlaceholderEditModal = ({ visible }: PlaceholderEditModalProps) => {
+const PlaceholderEditModal = ({
+  visible,
+  placeholderId,
+  onClose,
+  onSubmit,
+}: PlaceholderEditModalProps) => {
+  const { placeholderList, setPlaceholderList } = usePlaceholderList();
+  const titleInputRef = useRef<HTMLInputElement>(null);
+  const placeholderInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!visible || !titleInputRef.current || !placeholderInputRef.current)
+      return;
+
+    const target = placeholderList.find((item) => item.id === placeholderId);
+    if (!target) return;
+
+    titleInputRef.current.value = target.title;
+    placeholderInputRef.current.value = target.placeholder;
+  }, [placeholderId, placeholderList, visible]);
+
+  const handleSubmit = () => {
+    if (!placeholderId) {
+      alert('Retry later');
+      return;
+    }
+
+    setPlaceholderList((prevPlaceholderList) =>
+      prevPlaceholderList.map((item) => {
+        if (item.id === placeholderId) {
+          item.title = titleInputRef.current?.value ?? '';
+          item.placeholder = placeholderInputRef.current?.value ?? '';
+        }
+
+        return item;
+      })
+    );
+    onSubmit?.();
+  };
+
   if (!visible) return <></>;
 
   return (
     <Container>
-      <TextField required label="%Title%" size="small" />
-      <TextField required multiline label="Placeholder" rows={4} />
+      <TextField
+        required
+        label="%Title%"
+        size="small"
+        inputRef={titleInputRef}
+        inputProps={{
+          maxLength: 100,
+        }}
+      />
+      <TextField
+        required
+        multiline
+        label="Placeholder"
+        rows={4}
+        inputRef={placeholderInputRef}
+        inputProps={{
+          maxLength: 5000,
+        }}
+      />
       <SubmitWrapper>
-        <Button variant="contained">Apply</Button>
-        <Button variant="outlined">Cancel</Button>
+        <Button variant="contained" onClick={handleSubmit}>
+          Apply
+        </Button>
+        <Button variant="outlined" onClick={onClose}>
+          Cancel
+        </Button>
       </SubmitWrapper>
     </Container>
   );

@@ -65,7 +65,7 @@ const PlaceholderList = ({
           }
         >
           <ListItemButton onClick={handleItemClick(item.id)}>
-            <ListItemText primary="Single-line" />
+            <ListItemText primary={item.title} />
           </ListItemButton>
         </ListItem>
       ))}
