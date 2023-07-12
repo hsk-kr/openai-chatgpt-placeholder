@@ -1,16 +1,22 @@
 {
   "name": "chrome extension tutorial",
-  "description": "The power of React and TypeScript for building interactive Chrome extensions",
+  "description": "OpenAI ChatGPT Placeholder",
   "version": "1.0.0",
   "manifest_version": 3,
   "action": {
     "default_popup": "index.html",
     "default_title": "Open the popup"
   },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon32.png",
+    "128": "icon192.png"
+  },
   "permissions": ["activeTab", "storage"],
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
+      "matches": ["https://chat.openai.com/*"],
       "js": ["./assets/content.js"]
     }
   ]
