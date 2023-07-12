@@ -6,14 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Switch from '@mui/material/Switch';
 
-interface PlaceholderListItem {
-  id: string;
-  title: string;
-  active: boolean;
-}
-
 interface PlaceholderListProps {
-  items?: PlaceholderListItem[];
+  items?: chrome.custom.PlaceholderListItem[];
   onItemClick?: (id: string) => void;
   onItemDelete?: (id: string) => void;
   onItemToggle?: (id: string, active: boolean) => void;

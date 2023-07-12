@@ -10,16 +10,11 @@ import { flushSync } from 'react-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { createContext } from 'react';
 
-type PlaceHolderListItem = {
-  id: string;
-  title: string;
-  placeholder: string;
-  active: boolean;
-};
-
 interface GlobalContextType {
-  placeholderList: PlaceHolderListItem[];
-  setPlaceholderList: Dispatch<SetStateAction<PlaceHolderListItem[]>>;
+  placeholderList: chrome.custom.PlaceholderListItem[];
+  setPlaceholderList: Dispatch<
+    SetStateAction<chrome.custom.PlaceholderListItem[]>
+  >;
   addNewPlaceholderListItem: VoidFunction;
   removePlaceholderListItem: (id: string) => void;
   togglePlaceholderListItemActive: (id: string, active: boolean) => void;
@@ -32,9 +27,9 @@ const GlobalContext = createContext<GlobalContextType>({} as GlobalContextType);
 
 const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
-  const [placeholderList, setPlaceholderList] = useState<PlaceHolderListItem[]>(
-    []
-  );
+  const [placeholderList, setPlaceholderList] = useState<
+    chrome.custom.PlaceholderListItem[]
+  >([]);
   const [available, setAvailable] = useState<boolean>(false);
 
   useEffect(() => {
@@ -44,10 +39,16 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
     chrome.storage.local.set({
       placeholderList: JSON.stringify(placeholderList),
     });
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    chrome.storage.local.set({ available });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [placeholderList]);
+
+  useEffect(() => {
+    if (!chrome?.storage?.local || loading) return;
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    chrome.storage.local.set({ available: JSON.stringify(available) });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [available]);
 
   useEffect(() => {
     if (!chrome?.storage?.local) return;
@@ -61,7 +62,7 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             setPlaceholderList(JSON.parse(result.placeholderList));
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            setAvailable(result.available || false);
+            setAvailable(result.available === 'true' || false);
           });
         } catch (e) {
           flushSync(() => {
