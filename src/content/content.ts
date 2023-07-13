@@ -12,6 +12,26 @@ function isTextboxEmpty() {
   return !textareaElmt || textareaElmt.value.length === 0;
 }
 
+function scrollToTheBottom() {
+  const textareaElmt = document.querySelector('textarea');
+  if (!textareaElmt) {
+    console.error(`textarea can't be found.`);
+    return;
+  }
+
+  textareaElmt.scrollTop = textareaElmt.scrollHeight;
+}
+
+function focusOnTextbox() {
+  const textareaElmt = document.querySelector('textarea');
+  if (!textareaElmt) {
+    console.error(`textarea can't be found.`);
+    return;
+  }
+
+  textareaElmt.focus();
+}
+
 function setTextbox(value: string) {
   const textareaElmt = document.querySelector('textarea');
   if (!textareaElmt) {
@@ -20,6 +40,8 @@ function setTextbox(value: string) {
   }
 
   textareaElmt.value = value;
+  // It fires the height resizing event of the input element, the value doesn't matter.
+  textareaElmt.style.height = '1px';
 }
 
 function isResponseGenerating() {
@@ -61,6 +83,8 @@ function init() {
         if (!placeholder.active) continue;
         if (title.includes(placeholder.title.toLocaleLowerCase())) {
           setTextbox(placeholder.placeholder);
+          scrollToTheBottom();
+          focusOnTextbox();
           break;
         }
       }
