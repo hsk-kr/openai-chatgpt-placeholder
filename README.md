@@ -14,6 +14,8 @@ If you find any issues and have any good suggestions, please submit them as issu
 
 ## Preview
 
+![preview](https://github.com/hsk-kr/openai-chatgpt-placeholder/raw/main/docs/preview_extension.mp4)
+
 ## How To Use
 
 1. Add a new item.
