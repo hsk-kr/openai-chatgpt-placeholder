@@ -14,9 +14,7 @@ If you find any issues and have any good suggestions, please submit them as issu
 
 ## Preview
 
-<video width="640" height="340" controls>
-  <source src="https://github.com/hsk-kr/openai-chatgpt-placeholder/raw/main/docs/preview_extension.mp4" type="video/mp4">
-</video>
+https://github.com/hsk-kr/openai-chatgpt-placeholder/assets/57546034/61b73192-10bf-42e2-8fb6-46fa48e1b44d
 
 ## How To Use
 
