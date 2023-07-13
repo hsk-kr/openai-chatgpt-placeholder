@@ -14,7 +14,9 @@ If you find any issues and have any good suggestions, please submit them as issu
 
 ## Preview
 
-![preview](https://github.com/hsk-kr/openai-chatgpt-placeholder/raw/main/docs/preview_extension.mp4)
+<video width="640" height="340" controls>
+  <source src="https://github.com/hsk-kr/openai-chatgpt-placeholder/raw/main/docs/preview_extension.mp4" type="video/mp4">
+</video>
 
 ## How To Use
 
