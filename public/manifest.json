@@ -1,6 +1,6 @@
 {
-  "name": "chrome extension tutorial",
-  "description": "OpenAI ChatGPT Placeholder",
+  "name": "OpenAI ChatGPT Placeholder",
+  "description": "OpenAI ChatGPT Placeholder. This extension automatically inserts placeholder text for you!",
   "version": "1.0.0",
   "manifest_version": 3,
   "action": {
