@@ -96,15 +96,9 @@ function init() {
       for (const [key, { newValue }] of Object.entries(changes)) {
         switch (key) {
           case 'placeholderList': {
-            // generate lowercasedTitle
-            const placeholderList = JSON.parse(
+            globalData.placeholderList = JSON.parse(
               newValue as string
             ) as chrome.custom.PlaceholderListItem[];
-
-            globalData.placeholderList = placeholderList.map((value) => ({
-              ...value,
-              lowercasedTitle: value.title.toLocaleLowerCase(),
-            }));
             break;
           }
           case 'available': {
