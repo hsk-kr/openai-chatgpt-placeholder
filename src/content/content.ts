@@ -80,13 +80,16 @@ function init() {
       if (!title) return;
 
       for (const placeholder of globalData.placeholderList) {
-        if (!placeholder.active) continue;
-        if (title.includes(placeholder.title.toLocaleLowerCase())) {
-          setTextbox(placeholder.placeholder);
-          scrollToTheBottom();
-          focusOnTextbox();
-          break;
+        if (
+          !placeholder.active ||
+          !title.includes(placeholder.title.toLocaleLowerCase())
+        ) {
+          continue;
         }
+
+        setTextbox(placeholder.placeholder);
+        scrollToTheBottom();
+        focusOnTextbox();
       }
     }, INTERVAL);
   };
